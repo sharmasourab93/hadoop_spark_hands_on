@@ -1,0 +1,17 @@
+#Navigate to SimpleApp directory
+cd ~/danskeit_bigdata/labs/spark/spark-application/SimpleApp
+
+#Start Spark Master
+stop-master.sh
+
+#Start Spark Worker
+stop-slave.sh
+
+#Submit Spark Job
+spark-submit --class com.examples.spark.core.SimpleApp --master spark://bigdata-box:7077 ./dist/SimpleApp.jar /home/bigdatalab/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt
+
+#Stop Spark Worker
+stop-slave.sh
+
+#Stop Spark Master
+stop-master.sh

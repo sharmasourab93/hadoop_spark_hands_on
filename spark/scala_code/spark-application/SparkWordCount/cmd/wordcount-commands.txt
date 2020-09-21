@@ -1,0 +1,31 @@
+#Navigate to WordCount directory
+cd ~/danskeit_bigdata/labs/spark/spark-application/SparkWordCount/
+
+#Clean up target directory
+rm -r /hadoop.txt /user/training/wordcount/output
+
+#Submit Spark Job (standalone mode)
+spark-submit --class com.examples.spark.core.SparkWordCount ./dist/SparkWordCount.jar /home/ubuntu/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt /home/ubuntu/spark/wordcount/output
+
+#View output
+cat /home/ubuntu/spark/wordcount/output/part*
+
+#Submit Spark Job (spark cluster mode)
+spark-submit --master spark://<spark-master-ip>:7077 --name wordcount --class com.examples.spark.core.SparkWordCount ./dist/SparkWordCount.jar file:///home/ubuntu/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt file:///home/ubuntu/spark/wordcount/output
+
+spark-submit --master spark://<spark-master-ip>:7077 --deploy-mode cluster --name wordcount --class com.examples.spark.core.SparkWordCount ./dist/SparkWordCount.jar file:///home/ubuntu/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt file:///home/ubuntu/spark/wordcount/output
+
+#View output
+cat /home/ubuntu/spark/wordcount/output/part*
+
+#Submit Spark Job (yarn cluster mode - local file system)
+spark-submit --master yarn --name wordcount --class com.examples.spark.core.SparkWordCount ./dist/SparkWordCount.jar file:///home/ubuntu/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt file:///home/ubuntu/spark/wordcount/output
+
+#Clean up target directory
+hadoop fs -rm -r /user/training/wordcount/output
+
+#Submit Spark Job (yarn cluster mode - hdfs file system)
+spark-submit --master yarn --name wordcount --class com.examples.spark.core.SparkWordCount ./dist/SparkWordCount.jar /user/training/wordcount/input/wordcount-input.txt /user/training/wordcount/output
+
+#View output
+hadoop fs -cat /user/training/wordcount/output/part*

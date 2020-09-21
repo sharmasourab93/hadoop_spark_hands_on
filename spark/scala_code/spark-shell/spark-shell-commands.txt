@@ -1,0 +1,23 @@
+spark-shell
+===========
+#Connect to spark shell in standalone mode with single thread
+$spark-shell --master local
+
+#Connect to spark shell in standalone mode with multiple threads
+$spark-shell --master local[2]
+
+#Connect to spark shell in cluster mode with spark cluster manager
+$spark-shell --master spark://<master-ip>:7077
+
+#Connect to spark shell in cluster mode with yarn cluster manager
+$spark-shell --master yarn
+
+#Print RDD Lineage
+rddname.toDebugString
+
+#Print all RDD data
+rddname.collect().foreach(println)
+
+#print portion of RDD data
+rddname.take(5).foreach(println)
+

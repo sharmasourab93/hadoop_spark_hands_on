@@ -1,0 +1,23 @@
+val path = "file:///home//danskeit_bigdata/labs/dataset/spark/people.json"
+
+val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+val df = sqlContext.read.json("file:///home/ubuntu/danskeit_bigdata/labs/dataset/spark/people.json")
+
+df.show()
+df.printSchema()
+df.select("name").show()
+df.select(df("name"), df("age") + 1).show()
+df.filter(df("age") > 21).show()
+df.groupBy("age").count().show()
+
+df.registerTempTable("people")
+
+val teenagers = sqlContext.sql("SELECT name, age FROM people WHERE age >= 13 AND age <= 19")
+teenagers.show()	// Displays records
+teenagers.count()	// Displays count
+
+teenagers.collect()	// Collects data from Dataframe to Array
+teenagers.collect().foreach(println)	// Prints data available in the Dataframe
+
+val df = sqlContext.read.format("json").load("examples/src/main/resources/people.json")
+df.select("name", "age").write.format("parquet").save("namesAndAges.parquet")

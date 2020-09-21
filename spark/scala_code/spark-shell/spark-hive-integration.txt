@@ -1,0 +1,23 @@
+
+#STEP 1: Imports
+import java.io.File
+import org.apache.spark.sql.{Row, SaveMode, SparkSession}
+
+#STEP 2: Hive metastore location
+val warehouseLocation = new File("spark-warehouse").getAbsolutePath
+
+#STEP 3: Create Spark Session
+val spark = SparkSession.builder().appName("Spark Hive Example").config("spark.sql.warehouse.dir", warehouseLocation).enableHiveSupport().getOrCreate()
+	  
+#STEP 4: Create Table
+sql("CREATE TABLE IF NOT EXISTS src (key INT, value STRING) USING hive")
+
+#STEP 5: Load Data
+sql("LOAD DATA LOCAL INPATH '/opt/hive/examples/files/kv1.txt' INTO TABLE src")
+
+#STEP 6: Show Data
+sql("SELECT * FROM src").show()
+sql("SELECT * FROM src").show(100)
+
+#STEP 7: Write Data
+sql("INSERT OVERWRITE LOCAL DIRECTORY '/home/ubuntu/output' SELECT * FROM src")

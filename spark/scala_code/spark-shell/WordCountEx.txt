@@ -1,0 +1,6 @@
+val inputfile = sc.textFile("/home/ubuntu/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt")
+val counts = inputfile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_+_);
+counts.toDebugString
+counts.collect().foreach(println)
+counts.cache
+counts.saveAsTextFile("/home/ubuntu/output")
