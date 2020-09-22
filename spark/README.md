@@ -15,7 +15,7 @@
 > What is Spark? 
     
 Apache Spark is a fast and generate engine for large-scale data processing.  
-Spark is open source distributed computing engine for data processing and data analytics.   
+Spark is an open source distributed computing engine for data processing and data analytics.   
 It was originally developed at UC Berkely in 2009.   
 
 > Spark On Hadoop 
@@ -26,6 +26,10 @@ It was originally developed at UC Berkely in 2009.
 
 ![image](refs/2_spark.JPG)
 
+> Broadcast Variables & Accumulators
+
+Sometimes a variable needs to be shared across tasks, or between tasks and the driver program. Spark supports two types of shared variables: broadcast variables, which can be used to cache a value in memory on all nodes, and accumulators, which are variables that are only “added” to, such as counters and sums.
+[More on](https://spark.apache.org/docs/3.0.0/rdd-programming-guide.html)
 
 ### Map Reduce Vs Spark 
 
@@ -38,7 +42,7 @@ SPARK  provides a performance which is 10 times faster than Map Reduce on disk a
 
 The Spark modules are as follows:  
 
-- Spark Core => Spark Context
+- Spark Core => Spark Context  
     Spark Core is the base engine for distributed task dispatching, scheduling, and basic I/O functionalities.
     Spark uses a specialized fundamental data structure known as RDD (Resilient Distributed Datasets) 
     that is a logical collection of data partitioned across machines.
@@ -76,6 +80,36 @@ RDDs can contain any type of Python, Java, or Scala objects, including user-defi
 
 ![image](refs/3_spark_RDD.JPG)
 
+> How to create RDD? 
+1. Reading Data from external File 
+2. Parallelizing the Collection
+
+> What are transformations in RDD? 
+- filter 
+- map 
+- flatMap 
+- join
+- union
+
+> What are actions in RDD?
+- count 
+- sum 
+- reduce 
+- groupBY  
+
+> RDD Lineage 
+
+RDD Lineage (aka RDD Operator graph or RDD Dependency Graph) ia a graph of all the parent RDDs of an RDD. It is built as a consequence of applying transformtions to the RDD and createa logican execution plan.
+
+The execution DAG of physical execution plan is that the DAG of stages. 
+
+![image](refs/7_rdd_lineage.JPG)
+
+
+> Persist Vs SaveAs... In RDD 
+
+In spark, `rdd.persist()` saves the state of the RDD as it.   
+While `rdd.saveAsTextFile("file.txt")` saves the file to the given location in HDFS.  
 
 ### Spark Architecture 
 The Apache Spark framework uses a master–slave architecture that consists of a driver, which runs as a master node, 
