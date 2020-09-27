@@ -1,0 +1,225 @@
+
+Introducton to Bigdata
+==========================
+What  is Bigdata?
+Why Bigdata?
+Challanges in Bigdata
+Bigdata Usecases
+Limitations of traditional BI architecture
+Solution to overcome limitations what we have with traditional BI arch
+
+Tech Stack to build Bigdata apps
+
+What is Hadoop?
+Different Hadoop Modes
+Hadoop Components
+Hadoop Architecture
+Hadoop Setup and Configuration
+
+HDFS CLI Commands
+	- List files
+	  hadoop fs -ls /
+
+	- Create directory
+	  hadoop fs -mkdir /
+
+	- Copy files from Local
+	  hadoop fs -put s3://bigdata/input /user/training/input
+	  hadoop fs -copyFromLocal /home/bigdata/input
+
+	- Copy files within HDFS
+	  hadoop fs -cp /user/training/input1 /user/training/input2
+
+	  Hadoop
+		|_ HDFS
+		|_ S3
+		|_ Azure Blob
+		...
+
+	- Move files
+		hadoop fs -mv /user/training/input1 /user/training/input2
+
+	- Remove directory
+		hadoop fs -rm /user/training/input1/input.txt
+		hadoop fs -rmdir /user/training/input1/
+		hadoop fs -rmr /user/training/input1/
+
+	- View file content
+	   hadoop fs -cat /user/training/input1/input.txt
+
+
+
+
+	...
+
+HDFS TASK
+
+	STEP 1: Connect to bigdata-box and start HDFS
+			start-dfs.sh
+
+    STEP 2: jps
+			NameNode
+			DataNode
+			SecondaryNameNode
+
+
+
+			#Verify Logs
+			/opt/hadoop/logs
+
+			#If NameNode not started
+			stop-dfs.sh
+			hdfs namenode -format
+			start-dfs.sh
+
+	STEP 3: Listing HDFS root directory
+			hadoop fs -ls /
+
+	STEP 4: Create directory structure as follows
+			/user/training/wordcount/input
+
+			hadoop fs -mkdir /user
+			hadoop fs -mkdir /user/training
+			hadoop fs -mkdir /user/training/wordcount
+			hadoop fs -mkdir /user/training/wordcount/input
+
+			hadoop fs -ls /user
+			hadoop fs -ls /user/training
+			hadoop fs -ls /user/
+
+	STEP 5: Copy file from local to hdfs
+			cat ~/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt
+			hadoop fs -put ~/danskeit_bigdata/labs/dataset/wordcount/wordcount-input.txt /user/training/wordcount/input
+
+	STEP 6: View copied file details
+			hadoop fs -cat /user/training/wordcout/input/wordcount-input.txt
+
+====================================================
+
+Hadoop
+	- Hadoop Basics
+	- HDFS (Distributed Data Storage)
+		- NameNode
+		- SecondaryNameNode
+		- DataNode
+		
+		- Blocks
+		- Unit Distribution and Replication
+		
+	- MR (Distributed Data Processing)
+		
+		- Input => Splits => Mapper => Combiner => Shuffler & Sort => Partitioner => Reducer => Output
+						  (Map Side Join)                                       (Reduce Side Join)
+		
+		- Distributed Cache
+				
+	- Hive
+		- Provides SQL interface to analyse data
+		- Hive on MR
+		- Hive on Spark
+		- Database/Schema => Tables [Managed Table, External Table, Partitioned Table, Bucketed/Clustered Table]
+		- DDL, DML
+		- JOINS - ALL
+		- VIEWS
+		- TRANSACTIONS - BY DEFAULT NO. POSSSIBLE IF WE CREATE TRANSACTIONAL TABLE
+		- UDF - User Defined Function -> one to one  
+		- UDAF - User Defined Aggregate Function -> many to one -> avg, count, sum
+				
+	- Sqoop
+		- Data Loading Tool
+		- Structured Data
+		- Bulk data transfer
+		
+		- Sqoop Import
+				- Source - RDBMS | DW
+				- All Tables | Table | Query
+				- Target - HDFS | Hive | HBase
+				
+		- Sqoop Export
+				- Source  - HDFS | Hive | HBase
+				- Target  - RDBMS | DW
+				
+	- Flume
+		- Unstructured
+		- Streams
+		
+		- Source [FILE | MQ | API] => Channel => Sink [HDFS | KAFKA]
+		
+Spark
+	- Spark Basics
+	- In memory distributed data processing
+	- Spark Modes
+		- Local
+		- Cluster
+			- Spark Cluster Manager
+			- YARN
+			- MESOS
+			- K8s
+			
+	- Storage
+		- RDD (Resilient Distributed Dataset)
+			- Immutable
+			- Distributed
+			- Lazy Evaluated
+			- Fault Tolerant
+	- Processing
+		- Operations
+			- Transformations				
+			- Actions
+				
+	- Spark Architecture
+		- Master
+		- Workers
+		- Driver => Spark Application => Spark Context => Spark Session
+		- Cluster Manager
+		
+		- spark-shell [write spark programs interactively]
+		- pyspark [wtire python programs interactively]
+		
+		- Spark Applications => Scala, Java, Python, R
+		
+	- Spark Modules
+		- Spark Core => Spark Context
+         - Spark Context
+         - RDD
+         - How to create RDD
+            - Reading data from external file
+            - Parallelizing the collection
+         - Transformations ==> Produce new RDD
+                - filter
+                - map
+                - flatMap
+                - join
+                -union
+         - Actions => Produce Results
+                - count
+                - sum
+                - reduce
+                - groupBy
+         - RDD Lineage => DAG
+         - Broadcast Variable => Immutable, shared across all workers / tasks
+         - Accumulator => Mutable, Shared Object,  Helps to keep track of the counters
+         - rdd.persist() => Saving the state of the RDD
+         - rdd.saveAsTextFile("result.txt")
+
+		- Spark SQL
+           - Spark SQL Context
+           - DataFrame API (Abstraction on top of RDD)
+              - Create from Exisiting RDD
+              - By Loading/reading data from an external file
+           - SQL Queries
+           - Dataset API
+             - Strongly typed
+             - Optimized
+           - Hive On Spark
+           - Spark Hive Context
+
+		- Spark Streaming => Streaming Context
+            - What is SStreaming?
+            - Kafka
+            -
+		- Spark ML
+		- Spark GraphX
+			
+		
+	
