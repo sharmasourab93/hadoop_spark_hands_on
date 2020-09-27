@@ -70,7 +70,8 @@ Hive is an excellent query engine on top of Hadoop but:
 ![image](refs/42_hive_metastore.JPG)
 
 
-**Working of Hive**
+**Working of Hive**  
+
 ![image](refs/43_hive_working.JPG)
 
 
